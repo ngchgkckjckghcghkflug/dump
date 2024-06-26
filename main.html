@@ -10,8 +10,10 @@
     <meta name="viewport" content="width=device-width">
     <link rel="manifest" href="https://ngchgkckjckghcghkflug.github.io/dump/manifest.json" />
 </head>
-
-<div id="mydiv"></div>
+<body>
+    <button id="calc">Click Me!</button>
+    <div id="mydiv"></div>
+</body>
 <script>
 function mylog(a){
     var div = document.getElementById('mydiv');
@@ -42,39 +44,47 @@ function myFunction(the_height) {
         mylog(`To be healthy you need to lose ${round2(the_weight-bmi2kg(24.9,the_height))} kg`);
         mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
     }
-    else  {
-        mylog("You are obese.</br></h1>");
+    else if (the_BMI > 29.9) {
+        mylog("You are obese.");
         mylog("To be healthy your BMI should be between 18.5 and 24.9");
         mylog(`To be healthy you need to lose ${round2(the_weight-bmi2kg(24.9,the_height))} kg`);
         mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
         
     }
-}
+    localStorage.setItem("displaydata",document.getElementById('mydiv').innerHTML );
+} 
 
 var the_BMI, the_height, the_heights, the_weight;
 
-the_height = prompt("Enter the height in feet: ");
 
-
-if (the_height !== null && the_height.includes("'") && the_height.length > 1){
-    console.log("using inches")
-    var part1 = Number.parseFloat(the_height.split("'")[0]);
-    var part2 = Number.parseFloat(the_height.split("'")[1]);
-    if ( !isNaN(part1) && !isNaN(part2) ){
-        the_height = part1 + (part2/12);
+function main() {
+    the_height = prompt("Enter the height in feet: ");
+    
+    
+    if (the_height !== null && the_height.includes("'") && the_height.length > 1){
+        console.log("using inches")
+        var part1 = Number.parseFloat(the_height.split("'")[0]);
+        var part2 = Number.parseFloat(the_height.split("'")[1]);
+        if ( !isNaN(part1) && !isNaN(part2) ){
+            the_height = part1 + (part2/12);
+            myFunction(the_height*30.48);
+        } else {
+            mylog("Please enter a valid height.");
+        }
+    } else if(the_height !== null && !isNaN(Number.parseFloat(the_height))) {
+        console.log("using feet")
+        the_height = Number.parseFloat(the_height);
         myFunction(the_height*30.48);
-    } else {
-        mylog("<h1><br>Please enter a valid height.</br></h1>");
+    } else{
+        mylog("Please enter a valid height.");
     }
-} else if(the_height !== null && !isNaN(Number.parseFloat(the_height))) {
-    console.log("using feet")
-    the_height = Number.parseFloat(the_height);
-    myFunction(the_height*30.48);
-} else{
-    mylog("<h1><br>Please enter a valid height.</br></h1>");
 }
 
-    
+document.getElementById("calc").addEventListener("click", function () { 
+    document.getElementById('mydiv').innerHTML = ""; 
+    main();
+});
+
 </script>
 
 
