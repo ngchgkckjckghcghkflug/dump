@@ -9,55 +9,72 @@
     <meta name="theme-color" content="#317EFB"/>
     <meta name="viewport" content="width=device-width">
     <link rel="manifest" href="https://ngchgkckjckghcghkflug.github.io/dump/manifest.json" />
-        
 </head>
 
 <div id="mydiv"></div>
 <script>
 function mylog(a){
     var div = document.getElementById('mydiv');
-    div.innerHTML += a;
+    div.innerHTML +=  "<h1><br>"+a+"</br></h1>";
 }
 function round2(num) {
     return +(Math.round(num + "e+2")  + "e-2");
 }
+function bmi2kg(bmi,height) {
+    return round2(bmi * Math.pow((height / 100), 2));
+}
 function myFunction(the_height) {
-    the_height = (the_height * 30.48);
     the_weight = Number.parseFloat(prompt("Enter the weight in kg: "));
+    if (isNaN(the_weight)){
+        mylog("Please enter a valid weight.");
+        return
+    }
     the_BMI = (the_weight / Math.pow((the_height / 100), 2));
-    mylog(`<h1><br>Your Body Mass Index is ${round2(the_BMI, 2)}</br></h1>`);
+    mylog(`Your Body Mass Index is ${round2(the_BMI)}`);
     if (the_BMI <= 18.5) {
-        mylog("<h1><br>You are underweight.</br></h1>");
+        mylog("You are underweight.");
     } 
     else if (the_BMI <= 24.9) {
-        mylog("<h1><br>You are healthy.</br></h1>");
+        mylog("You are healthy.");
     } 
     else if (the_BMI <= 29.9) {
-        mylog("<h1><br>You are over weight.</br></h1>");
-        mylog(`<h1><br>To be healthy you need to lose ${round2(the_weight - 24.9 * Math.pow((the_height / 100), 2))} kg</br></h1>`);
-        mylog(`<h1><br>To be healthy your weight should be ${round2(24.9 * Math.pow((the_height / 100), 2))} kg</br></h1>`);
+        mylog("You are over weight.");
+        mylog(`To be healthy you need to lose ${round2(the_weight-bmi2kg(24.9,the_height))} kg`);
+        mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
     }
     else  {
-        mylog("<h1><br>You are obese.</br></h1>");
-        mylog("<h1><br>To be healthy your BMI should be between 18.5 and 24.9</br></h1>");
-        mylog(`<h1><br>To be healthy you need to lose ${round2(the_weight - 24.9 * Math.pow((the_height / 100), 2))} kg</br></h1>`);
-        mylog(`<h1><br>To be healthy your weight should be ${round2(24.9 * Math.pow((the_height / 100), 2))} kg</br></h1>`);
+        mylog("You are obese.</br></h1>");
+        mylog("To be healthy your BMI should be between 18.5 and 24.9");
+        mylog(`To be healthy you need to lose ${round2(the_weight-bmi2kg(24.9,the_height))} kg`);
+        mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
+        
     }
 }
 
 var the_BMI, the_height, the_heights, the_weight;
-the_height = prompt("Enter the height in feet: ");
-the_heights = the_height.split("'");
 
-if (!isNaN(the_heights[0])){
-    if (the_heights.length > 1 && !isNaN(the_heights[1])  ) {
-        the_height = (Number.parseFloat(the_heights[0]) + (Number.parseFloat(the_heights[1]) / 12));
+the_height = prompt("Enter the height in feet: ");
+
+
+if (the_height !== null && the_height.includes("'") && the_height.length > 1){
+    console.log("using inches")
+    var part1 = Number.parseFloat(the_height.split("'")[0]);
+    var part2 = Number.parseFloat(the_height.split("'")[1]);
+    if ( !isNaN(part1) && !isNaN(part2) ){
+        the_height = part1 + (part2/12);
+        myFunction(the_height*30.48);
     } else {
-        the_height = Number.parseFloat(the_height);
+        mylog("<h1><br>Please enter a valid height.</br></h1>");
     }
-    myFunction(the_height);
+} else if(the_height !== null && !isNaN(Number.parseFloat(the_height))) {
+    console.log("using feet")
+    the_height = Number.parseFloat(the_height);
+    myFunction(the_height*30.48);
+} else{
+    mylog("<h1><br>Please enter a valid height.</br></h1>");
 }
 
+    
 </script>
 
 
