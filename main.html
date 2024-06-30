@@ -9,93 +9,165 @@
     <meta name="theme-color" content="#317EFB"/>
     <meta name="viewport" content="width=device-width">
     <link rel="manifest" href="https://ngchgkckjckghcghkflug.github.io/dump/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
+<style>
+    h1,h2,h3 {
+        font-family: "Roboto", sans-serif;"
+    }
+    <style>
+    table {
+      font-family: "Roboto", sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      font-family: "Roboto", sans-serif;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+      font-family: "Roboto", sans-serif;
+    }
+    </style>
+</style>
 <body>
     <button id="calc">Calculate BMI</button>
+    <button id="history">History</button>
+    <button id="chistory">Clear History</button>
+    <table></table>
     
     <div id="mydiv"></div>
 </body>
 <script>
-document.getElementById('mydiv').innerHTML = localStorage.getItem("displaydata");
-function mylog(a){
-    var div = document.getElementById('mydiv');
-    div.innerHTML +=  "<h1><br>"+a+"</br></h1>";
-}
-function round2(num) {
-    return +(Math.round(num + "e+2")  + "e-2");
-}
-function bmi2kg(bmi,height) {
-    return round2(bmi * Math.pow((height / 100), 2));
-}
-function myFunction(the_height) {
-    the_weight = Number.parseFloat(prompt("Enter the weight in kg: "));
-    if (isNaN(the_weight)){
-        mylog("Please enter a valid weight.");
-        return
-    }
-    the_BMI = (the_weight / Math.pow((the_height / 100), 2));
-    mylog(`Your Body Mass Index is ${round2(the_BMI)}`);
-    if (the_BMI <= 18.5) {
-        mylog("You are underweight.");
-    } 
-    else if (the_BMI <= 24.9) {
-        mylog("You are healthy.");
-    } 
-    else if (the_BMI <= 29.9) {
-        mylog("You are over weight.");
-        mylog(`To be healthy you need to lose ${round2(the_weight-bmi2kg(24.9,the_height))} kg`);
-        mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
-    }
-    else if (the_BMI > 29.9) {
-        mylog("You are obese.");
-        mylog("To be healthy your BMI should be between 18.5 and 24.9");
-        mylog(`To be healthy you need to lose ${round2(the_weight-bmi2kg(24.9,the_height))} kg`);
-        mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
-        
-    }
-    localStorage.setItem("displaydata",document.getElementById('mydiv').innerHTML );
-} 
-
-var the_BMI, the_height, the_heights, the_weight;
-
-
-function main() {
-    the_height = prompt("Enter the height in feet: ");
     
-    
-    if (the_height !== null && the_height.includes("'") && the_height.length > 1){
-        console.log("using inches")
-        var part1 = Number.parseFloat(the_height.split("'")[0]);
-        var part2 = Number.parseFloat(the_height.split("'")[1]);
-        if ( !isNaN(part1) && !isNaN(part2) ){
-            the_height = part1 + (part2/12);
-            myFunction(the_height*30.48);
-        } else {
+    const date = new Date();
+    var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+
+    function mylog(a){
+        var div = document.getElementById('mydiv');
+        div.innerHTML +=  "<h1><br>"+a+"</br></h1>";
+    }
+    function round2(num) {
+        return +(Math.round(num + "e+2")  + "e-2");
+    }
+    function bmi2kg(bmi,height) {
+        return round2(bmi * Math.pow((height*30.48 / 100), 2));
+    }
+    function generateTableHead(table, data) {
+        let thead = table.createTHead();
+        let row = thead.insertRow();
+        for (let key of data) {
+          let th = document.createElement("th");
+          let text = document.createTextNode(key);
+          th.appendChild(text);
+          row.appendChild(th);
+        }
+    }
+    function generateTable(table, data) {
+        for (let element of data) {
+          let row = table.insertRow();
+          for (key in element) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(element[key]);
+            cell.appendChild(text);
+          }
+        }
+    }
+
+
+    var the_BMI, the_height, the_heights, the_weight;
+
+
+    function main() {
+        the_height = prompt("Enter the height in feet: ");
+
+
+        if (the_height !== null && the_height.includes("'") && the_height.length > 1){
+            console.log("using inches")
+            var part1 = Number.parseFloat(the_height.split("'")[0]);
+            var part2 = Number.parseFloat(the_height.split("'")[1]);
+            if ( !isNaN(part1) && !isNaN(part2) ){
+                the_height = part1 + (part2/12);
+                myFunction(the_height);
+            } else {
+                mylog("Please enter a valid height.");
+            }
+        } else if(the_height !== null && !isNaN(Number.parseFloat(the_height))) {
+            console.log("using feet")
+            the_height = Number.parseFloat(the_height);
+            myFunction(the_height);
+        } else{
             mylog("Please enter a valid height.");
         }
-    } else if(the_height !== null && !isNaN(Number.parseFloat(the_height))) {
-        console.log("using feet")
-        the_height = Number.parseFloat(the_height);
-        myFunction(the_height*30.48);
-    } else{
-        mylog("Please enter a valid height.");
     }
-}
+    function myFunction(the_height) {
+        the_weight = Number.parseFloat(prompt("Enter the weight in kg: "));
+        if (isNaN(the_weight)){
+            mylog("Please enter a valid weight.");
+            return
+        }
+        the_BMI = (the_weight / Math.pow((the_height*30.48 / 100), 2));
+        mylog(`Your Body Mass Index is ${round2(the_BMI)}`);
+        if (the_BMI <= 18.5) {
+            mylog("You are underweight.");
+        } 
+        else if (the_BMI <= 24.9) {
+            mylog("You are healthy.");
+        } 
+        else if (the_BMI <= 29.9) {
+            mylog("You are over weight.");
+            mylog(`To be healthy you need to lose ${round2(the_weight-bmi2kg(24.9,the_height))} kg`);
+            mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
+        }
+        else if (the_BMI > 29.9) {
+            mylog("You are obese.");
+            mylog("To be healthy your BMI should be between 18.5 and 24.9");
+            mylog(`To be healthy you need to lose ${round2(the_weight-bmi2kg(24.9,the_height))} kg`);
+            mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
 
-document.getElementById("calc").addEventListener("click", function () { 
-    document.getElementById('mydiv').innerHTML = "";
-    
-    main();
-});
+        }
+        localStorage.setItem(currentDate,JSON.stringify({ ...[the_height,the_weight] }) );
+        
+    } 
+
+    document.getElementById("calc").addEventListener("click", function () { 
+        document.getElementById('mydiv').innerHTML = "";
+        main();
+    });
+    document.getElementById("chistory").addEventListener("click", function () { 
+        document.querySelector("table").innerHTML = "";
+        localStorage.clear();
+    });
+    document.getElementById("history").addEventListener("click", function () { 
+        document.getElementById('mydiv').innerHTML = "";
+        var dates = Object.keys(localStorage);
+        console.log(dates);
+        var weights = [];
+        var heights = [];
+        Object.values(localStorage).forEach(function (item, index) {
+            heights.push(Object.values(JSON.parse(item))[0]);
+            weights.push(Object.values(JSON.parse(item))[1]);
+        })
+        console.log(heights);
+        console.log(weights);
+        var displaydata = [];
+        dates.forEach(function(item, i){
+            displaydata.push(JSON.parse(`{ "Date":"${item}","Weight":${weights[i]},"Height":${heights[i]}}`));
+        })
+        console.log(displaydata);
+        let table = document.querySelector("table");
+        generateTable(table, displaydata);
+        generateTableHead(table, Object.keys(displaydata[0]));
+    });
     
     
 
 </script>
-
-
-
-
-
-
-
 </html>
