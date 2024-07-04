@@ -148,7 +148,10 @@
     });
     document.getElementById("history").addEventListener("click", function () { 
         document.getElementById('mydiv').innerHTML = "";
-        var dates = JSON.parse(Object.values(localStorage));
+        var dates = [];
+        Object.values(localStorage).forEach(function(item, i){
+            dates.push(JSON.parse(item));
+        })
         console.log(dates);
         let table = document.querySelector("table");
         generateTable(table, dates);
