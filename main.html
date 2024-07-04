@@ -15,9 +15,9 @@
 </head>
 <style>
     h1,h2,h3 {
-        font-family: "Roboto", sans-serif;"
+        font-family: "Roboto", sans-serif;
     }
-    <style>
+    
     table {
       font-family: "Roboto", sans-serif;
       border-collapse: collapse;
@@ -35,7 +35,7 @@
       background-color: #dddddd;
       font-family: "Roboto", sans-serif;
     }
-    </style>
+    
 </style>
 <body>
     <button id="calc">Calculate BMI</button>
@@ -133,7 +133,8 @@
             mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
 
         }
-        localStorage.setItem(currentDate,JSON.stringify({ ...[the_height,the_weight] }) );
+        localStorage.setItem(currentDate,`{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}`);
+        
         
     } 
 
@@ -148,19 +149,13 @@
     });
     document.getElementById("history").addEventListener("click", function () { 
         document.getElementById('mydiv').innerHTML = "";
-        var dates = Object.keys(localStorage);
+        var dates = Object.values(localStorage);
         console.log(dates);
-        var weights = [];
-        var heights = [];
-        Object.values(localStorage).forEach(function (item, index) {
-            heights.push(Object.values(JSON.parse(item))[0]);
-            weights.push(Object.values(JSON.parse(item))[1]);
-        })
-        console.log(heights);
-        console.log(weights);
+
+        
         var displaydata = [];
         dates.forEach(function(item, i){
-            displaydata.push(JSON.parse(`{ "Date":"${item}","Weight":${weights[i]},"Height":${heights[i]}}`));
+            displaydata.push(JSON.parse(item));
         })
         console.log(displaydata);
         let table = document.querySelector("table");
