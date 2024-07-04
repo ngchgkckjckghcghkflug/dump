@@ -144,16 +144,15 @@
     });
     document.getElementById("chistory").addEventListener("click", function () { 
         document.querySelector("table").innerHTML = "";
-        document.getElementById('mydiv').innerHTML = "";
-        
+        document.getElementById('mydiv').innerHTML = "";  
     });
     document.getElementById("history").addEventListener("click", function () { 
         document.getElementById('mydiv').innerHTML = "";
         var dates = JSON.parse(Object.values(localStorage));
         console.log(dates);
         let table = document.querySelector("table");
-        generateTable(table, displaydata);
-        generateTableHead(table, Object.keys(displaydata[0]));
+        generateTable(table, dates);
+        generateTableHead(table, Object.keys(dates[0]));
     });
 </script>
 </html>
