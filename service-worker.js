@@ -1,7 +1,7 @@
 // Choose a cache name
 const cacheName = 'cache-v1';
 // List the files to precache
-const precacheResources = ['https://ngchgkckjckghcghkflug.github.io/dump/main.html'];
+const precacheResources = ['https://ngchgkckjckghcghkflug.github.io/dump/main.html',];
 
 // When the service worker is installing, open the cache and add the precache resources to it
 self.addEventListener('install', (event) => {
@@ -21,7 +21,7 @@ self.addEventListener('fetch', (event) => {
       if (cachedResponse) {
         return cachedResponse;
       }
-      return fetch(event.request);
+      
     }),
   );
 });
