@@ -32,5 +32,5 @@ self.addEventListener('fetch', (e) => {
     return response;
   })());
 });
-console.log(Object.keys(cache));
-console.log(Object.values(cache));
+console.log(Object.keys(caches));
+console.log(Object.values(cachesa));
