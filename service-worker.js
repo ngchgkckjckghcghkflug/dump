@@ -1,7 +1,7 @@
 // Choose a cache name
 const cacheName = 'cache-v1';
 // List the files to precache
-const precacheResources = ['/', '/dump/main.html', '/dump/android-chrome-512x512.png', '/dump/android-chrome-192x192.png','/dump/manifest.json'];
+const precacheResources = ['/dum[', '/dump/main.html', '/dump/android-chrome-512x512.png', '/dump/android-chrome-192x192.png','/dump/manifest.json'];
 
 // When the service worker is installing, open the cache and add the precache resources to it
 self.addEventListener('install', (event) => {
