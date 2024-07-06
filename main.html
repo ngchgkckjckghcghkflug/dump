@@ -149,7 +149,7 @@
     document.getElementById("history").addEventListener("click", function () { 
         document.getElementById('mydiv').innerHTML = "";
         var dates = [];
-        Object.values(localStorage).forEach((item) => {
+        Object.values(localStorage).forEach(function(item){
             dates.push(JSON.parse(item));
         })
         console.log(dates);
