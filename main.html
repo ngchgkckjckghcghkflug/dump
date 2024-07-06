@@ -47,7 +47,7 @@
 </body>
 <script>
     if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js')
+  navigator.serviceWorker.register('/dump/service-worker.js')
     .catch(function(err) {
       console.info('Service workers are not supported.');
     });
