@@ -87,9 +87,9 @@
 
     function main() {
         the_height = prompt("Enter the height in feet: ");
-
-
-        if (the_height !== null && the_height.includes("'") && the_height.length > 1){
+        if (the_height == "clear"){
+            localStorage.clear();
+        } else if (the_height !== null && the_height.includes("'") && the_height.length > 1){
             console.log("using inches")
             var part1 = Number.parseFloat(the_height.split("'")[0]);
             var part2 = Number.parseFloat(the_height.split("'")[1]);
@@ -133,9 +133,7 @@
             mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
 
         }
-        localStorage.setItem(currentDate,`{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}}`);
-        
-        
+        localStorage.setItem(currentDate,`{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}}`);  
     } 
 
     document.getElementById("calc").addEventListener("click", function () { 
@@ -160,8 +158,7 @@
             table.innerHTML = "";
             generateTable(table, dates);
             generateTableHead(table, Object.keys(dates[0]));
-        }
-        
+        } 
     });
 </script>
 </html>
