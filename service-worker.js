@@ -1,12 +1,34 @@
-self.addEventListener('install', function(event) {
-    event.waitUntil(
-      caches.open('your-cache-name').then(function(cache) {
-        return cache.addAll([
-          // your list of cache keys to store in cache
-          'https://ngchgkckjckghcghkflug.github.io/dump/main.html',
-          'https://ngchgkckjckghcghkflug.github.io/dump/mainfest.json',
-          // etc.
-        ])
-      })
-    );
-  });
+const cacheName = 'js13kPWA-v1';
+const appShellFiles = [
+  '/dump/main.html'
+  
+];
+const contentToCache = appShellFiles;
+
+self.addEventListener('install', (e) => {
+  console.log('[Service Worker] Install');
+  e.waitUntil((async () => {
+    const cache = await caches.open(cacheName);
+    console.log('[Service Worker] Caching all: app shell and content');
+    await cache.addAll(contentToCache);
+  })());
+});
+self.addEventListener('fetch', (e) => {
+  // Cache http and https only, skip unsupported chrome-extension:// and file://...
+  if (!(
+     e.request.url.startsWith('http:') || e.request.url.startsWith('https:')
+  )) {
+      return; 
+  }
+
+  e.respondWith((async () => {
+    const r = await caches.match(e.request);
+    console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
+    if (r) return r;
+    const response = await fetch(e.request);
+    const cache = await caches.open(cacheName);
+    console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
+    cache.put(e.request, response.clone());
+    return response;
+  })());
+});
