@@ -46,13 +46,13 @@
     <div id="mydiv"></div>
 </body>
 <script>
-    if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/dump/service-worker.js')
-    .catch(function(err) {
-      console.info('Service workers are not supported.');
-    });
-}
-    
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+    if (!registrations == [] && !registrations.active.state == 'activated') {
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/dump/service-worker.js').catch(function(err) {console.info(err)});
+        }
+    }
+});
     const date = new Date();
     var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 
