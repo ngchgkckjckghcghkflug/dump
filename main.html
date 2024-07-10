@@ -139,7 +139,7 @@
             mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
 
         }
-        localStorage.setItem(currentDate,`{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}}`);  
+        localStorage.setItem(date.getTime(),`{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}}`);  
     } 
 
     document.getElementById("calc").addEventListener("click", function () { 
