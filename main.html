@@ -53,6 +53,12 @@
             }
         });
     }
+    Notification.requestPermission().then((result) => {
+    if (result === 'granted') {
+        new Notification("hi");
+        setTimeout(randomNotification, 30000);
+    }
+}
     const date = new Date();
     var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 
