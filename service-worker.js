@@ -31,3 +31,34 @@ self.addEventListener('fetch', (e) => {
     
   })());
 });
+
+async function registerPeriodicNewsCheck() {
+  const registration = await navigator.serviceWorker.ready;
+  try {
+    await registration.periodicSync.register("get-latest-news", {
+      minInterval: 24 * 60 * 60 * 1000,
+    });
+  } catch {
+    console.log("Periodic Sync could not be registered!");
+  }
+}
+
+function fetchAndCacheLatestNews(){
+  Notification.requestPermission().then((result) => {
+    if (result === 'granted') {
+        new Notification("check your weight");
+        
+    }
+    })
+}
+self.addEventListener("periodicsync", (event) => {
+  if (event.tag === "get-latest-news") {
+    event.waitUntil(fetchAndCacheLatestNews());
+  }
+});
+Notification.requestPermission().then((result) => {
+  if (result === 'granted') {
+      new Notification("hi");
+      
+  }
+  })
