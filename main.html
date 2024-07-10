@@ -46,13 +46,13 @@
     <div id="mydiv"></div>
 </body>
 <script>
-    navigator.serviceWorker.getRegistrations().then(registrations => {
-    if (!registrations == [] && !registrations.active.state == 'activated') {
-        if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/dump/service-worker.js').catch(function(err) {console.info(err)});
-        }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            if (registrations.length !== 0 && !registrations.active.state == 'activated') {
+                navigator.serviceWorker.register('/dump/service-worker.js').catch(function(err) {console.info(err)});
+            }
+        });
     }
-});
     const date = new Date();
     var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 
