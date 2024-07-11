@@ -53,7 +53,7 @@
             }
         });
     }
-    
+    registerPeriodicNewsCheck();
     const date = new Date();
     var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 
@@ -61,6 +61,17 @@
         var div = document.getElementById('mydiv');
         div.innerHTML +=  "<h1><br>"+a+"</br></h1>";
     }
+    async function registerPeriodicNewsCheck() {
+        const registration = await navigator.serviceWorker.ready;
+        try {
+            await registration.periodicSync.register("get-latest-news", {
+            minInterval: 60 * 1000,
+            });
+        } catch {
+            console.log("Periodic Sync could not be registered!");
+        }
+}
+
     function round2(num) {
         return +(Math.round(num + "e+2")  + "e-2");
     }
