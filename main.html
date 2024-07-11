@@ -53,7 +53,7 @@
             }
         });
     }
-    async function hi(){
+    const main = async () => {
     const registration = await navigator.serviceWorker.ready;
   // Check if periodicSync is supported
   if ('periodicSync' in registration) {
@@ -78,6 +78,7 @@
   } else {
     console.log('Periodic background sync is not supported.');
   }
+
 }
     
     const date = new Date();
