@@ -53,6 +53,7 @@
             }
         });
     }
+    async function hi(){
     const registration = await navigator.serviceWorker.ready;
   // Check if periodicSync is supported
   if ('periodicSync' in registration) {
@@ -77,9 +78,7 @@
   } else {
     console.log('Periodic background sync is not supported.');
   }
-
-
-main();
+}
     
     const date = new Date();
     var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
