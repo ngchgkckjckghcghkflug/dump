@@ -32,33 +32,12 @@ self.addEventListener('fetch', (e) => {
   })());
 });
 
-async function registerPeriodicNewsCheck() {
-  const registration = await navigator.serviceWorker.ready;
-  try {
-    await registration.periodicSync.register("get-latest-news", {
-      minInterval: 60 * 1000,
-    });
-  } catch {
-    console.log("Periodic Sync could not be registered!");
-  }
-}
 
 function fetchAndCacheLatestNews(){
-  Notification.requestPermission().then((result) => {
-    if (result === 'granted') {
-        new Notification("check your weight");
-        
-    }
-    })
+  console.log('hi');
 }
 self.addEventListener("periodicsync", (event) => {
-  if (event.tag === "get-latest-news") {
+  if (event.tag === "news") {
     event.waitUntil(fetchAndCacheLatestNews());
   }
 });
-Notification.requestPermission().then((result) => {
-  if (result === 'granted') {
-      new Notification("hi");
-      
-  }
-  })

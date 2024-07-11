@@ -53,7 +53,34 @@
             }
         });
     }
-    registerPeriodicNewsCheck();
+    const registration = await navigator.serviceWorker.ready;
+  // Check if periodicSync is supported
+  if ('periodicSync' in registration) {
+    // Request permission
+    const status = await navigator.permissions.query({
+      name: 'periodic-background-sync',
+    });
+
+    if (status.state === 'granted') {
+      try {
+        // Register new sync every 24 hours
+        await registration.periodicSync.register('news', {
+          minInterval:  60 * 1000
+        });
+        console.log('Periodic background sync registered!');
+      } catch(e) {
+        console.error(`Periodic background sync failed:\nx${e}`);
+      }
+    } else {
+      console.info('Periodic background sync is not granted.');
+    }
+  } else {
+    console.log('Periodic background sync is not supported.');
+  }
+
+
+main();
+    
     const date = new Date();
     var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 
@@ -61,16 +88,7 @@
         var div = document.getElementById('mydiv');
         div.innerHTML +=  "<h1><br>"+a+"</br></h1>";
     }
-    async function registerPeriodicNewsCheck() {
-        const registration = await navigator.serviceWorker.ready;
-        try {
-            await registration.periodicSync.register("get-latest-news", {
-            minInterval: 60 * 1000,
-            });
-        } catch {
-            console.log("Periodic Sync could not be registered!");
-        }
-}
+    
 
     function round2(num) {
         return +(Math.round(num + "e+2")  + "e-2");
