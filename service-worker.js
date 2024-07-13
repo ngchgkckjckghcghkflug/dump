@@ -33,11 +33,3 @@ self.addEventListener('fetch', (e) => {
 });
 
 
-function fetchAndCacheLatestNews(){
-  console.log('hi');
-}
-self.addEventListener("periodicsync", (event) => {
-  if (event.tag === "news") {
-    event.waitUntil(fetchAndCacheLatestNews());
-  }
-});

@@ -1,7 +1,7 @@
 {
   "name": "BMI Calculator",
   "short_name": "BMI Calculator",
-  "start_url": "https://ngchgkckjckghcghkflug.github.io/dump/main.html",
+  "start_url": "/dump/main.html",
   "display": "standalone",
   "background_color": "#fff",
   "description": "A app to calculate BMI.",
@@ -12,12 +12,12 @@
   "icons": [
     
     {
-      "src":"https://ngchgkckjckghcghkflug.github.io/dump/android-chrome-192x192.png",
+      "src":"/dump/android-chrome-192x192.png",
       "sizes":"192x192",
       "type":"image/png"
     },
     
-    {"src":"https://ngchgkckjckghcghkflug.github.io/dump/android-chrome-512x512.png",
+    {"src":"/dump/android-chrome-512x512.png",
       "sizes":"512x512",
       "type":"image/png"
     }

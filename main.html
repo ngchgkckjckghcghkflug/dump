@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="theme-color" content="#317EFB"/>
     <meta name="viewport" content="width=device-width">
-    <link rel="manifest" href="https://ngchgkckjckghcghkflug.github.io/dump/manifest.json" />
+    <link rel="manifest" href="/dump/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -48,38 +48,13 @@
 <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(registrations => {
-            if (registrations.length !== 0 && !registrations.active.state == 'activated') {
+            if (registrations.length == 0) {
                 navigator.serviceWorker.register('/dump/service-worker.js').catch(function(err) {console.info(err)});
             }
         });
     }
-    const ma = async () => {
-    const registration = await navigator.serviceWorker.ready;
-  // Check if periodicSync is supported
-  if ('periodicSync' in registration) {
-    // Request permission
-    const status = await navigator.permissions.query({
-      name: 'periodic-background-sync',
-    });
-
-    if (status.state === 'granted') {
-      try {
-        // Register new sync every 24 hours
-        await registration.periodicSync.register('news', {
-          minInterval:  60 * 1000
-        });
-        console.log('Periodic background sync registered!');
-      } catch(e) {
-        console.error(`Periodic background sync failed:\nx${e}`);
-      }
-    } else {
-      console.info('Periodic background sync is not granted.');
-    }
-  } else {
-    console.log('Periodic background sync is not supported.');
-  }
-
-}
+    
+    
     
     const date = new Date();
     var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
