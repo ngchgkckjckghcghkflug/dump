@@ -160,8 +160,9 @@
         clicked = true;
         document.getElementById('mydiv').innerHTML = "";
         var dates = [];
-        Object.values(localStorage).forEach(function(item){
-            dates.push(JSON.parse(item));
+        
+        Object.values(localStorage).forEach(function(item,index){
+            dates.push(JSON.parse(localStorage.getItem(Object.keys(localStorage).sort()[index])));
         })
         console.log(dates);
         let table = document.querySelector("table");
