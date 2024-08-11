@@ -91,6 +91,21 @@
           }
         }
     }
+    function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 
     var the_BMI, the_height, the_heights, the_weight;
@@ -166,7 +181,7 @@
     });
     document.getElementById("recalc").addEventListener("click", function () { 
         document.getElementById('mydiv').innerHTML = "";
-        myFunction(5);
+        myFunction(Number.parseFloat(getCookie("height")));
     });
     document.getElementById("chistory").addEventListener("click", function () { 
         document.querySelector("table").innerHTML = "";
