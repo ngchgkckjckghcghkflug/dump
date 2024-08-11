@@ -38,7 +38,7 @@
     
 </style>
 <body>
-    <h1>hi</h1>
+    <button id="recalc">Recalculate</button>
     <button id="calc">Calculate BMI</button>
     <button id="history">History</button>
     <button id="chistory">Clear</button>
@@ -95,7 +95,7 @@
     var the_BMI, the_height, the_heights, the_weight;
 
 
-    function main() {
+    function getInput() {
         the_height = prompt("Enter the height in feet: ");
         if (the_height == "clear"){
             localStorage.clear();
@@ -148,7 +148,11 @@
 
     document.getElementById("calc").addEventListener("click", function () { 
         document.getElementById('mydiv').innerHTML = "";
-        main();
+        getInput();
+    });
+    document.getElementById("recalc").addEventListener("click", function () { 
+        document.getElementById('mydiv').innerHTML = "";
+        myFunction(5);
     });
     document.getElementById("chistory").addEventListener("click", function () { 
         document.querySelector("table").innerHTML = "";
