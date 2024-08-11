@@ -47,8 +47,13 @@
     <div id="mydiv"></div>
 </body>
 <script>
-    
-    
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            if (registrations.length == 0) {
+                navigator.serviceWorker.register('/dump/service-worker.js').catch(function(err) {console.info(err)});
+            }
+        });
+    }
     
     const date = new Date();
     var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
@@ -159,7 +164,7 @@
             dates.push(JSON.parse(localStorage.getItem(Object.keys(localStorage).sort()[index])));
             console.log(JSON.parse(localStorage.getItem(Object.keys(localStorage).sort()[index])))
         })
-        console.log(dates);
+
         let table = document.querySelector("table");
         if (clicked === true){
             table.innerHTML = "";
