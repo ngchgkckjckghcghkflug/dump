@@ -62,8 +62,9 @@
         var div = document.getElementById('mydiv');
         div.innerHTML +=  "<h1><br>"+a+"</br></h1>";
     }
-    
-
+    function setheight(the_height){
+        document.cookie = "height="+the_height;
+    }
     function round2(num) {
         return +(Math.round(num + "e+2")  + "e-2");
     }
@@ -96,8 +97,12 @@
 
 
     function getInput() {
+        var mode;
         the_height = prompt("Enter the height in feet: ");
-        if (the_height == "clear"){
+        if (the_height == "set"){
+            mode = True;
+        }
+        else if (the_height == "clear"){
             localStorage.clear();
         } else if (the_height !== null && the_height.includes("'") && the_height.length > 1){
             console.log("using inches")
@@ -105,14 +110,22 @@
             var part2 = Number.parseFloat(the_height.split("'")[1]);
             if ( !isNaN(part1) && !isNaN(part2) ){
                 the_height = part1 + (part2/12);
-                myFunction(the_height);
+                if (mode) {
+                    setheight(the_height);
+                } else {
+                    myFunction(the_height);
+                }
             } else {
                 mylog("Please enter a valid height.");
             }
         } else if(the_height !== null && !isNaN(Number.parseFloat(the_height))) {
             console.log("using feet")
             the_height = Number.parseFloat(the_height);
-            myFunction(the_height);
+            if (mode) {
+                    setheight(the_height);
+                } else {
+                    myFunction(the_height);
+                }
         } else{
             mylog("Please enter a valid height.");
         }
