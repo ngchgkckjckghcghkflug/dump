@@ -190,7 +190,7 @@
         
         var data = localStorage.getItem('height').split("},{");
         for (let i = 0; i <= data.length; i++) {
-            if (i === 1 || i === data.length-1){
+            if (i === 0 || i === data.length-1){
                 dates.push(JSON.parse(data[0]+"}"))
             }else{
                 dates.push(JSON.parse("{"+data[0]+"}"))
