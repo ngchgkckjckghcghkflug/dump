@@ -165,7 +165,8 @@
             mylog(`To be healthy your weight should be ${bmi2kg(24.9,the_height)} kg`);
 
         }
-        localStorage.setItem(date.getTime(),`{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}}`);  
+       
+        localStorage.setItem('height',[localStorage.getItem('height'),`{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}}`]);  
     } 
 
     document.getElementById("calc").addEventListener("click", function () { 
@@ -185,11 +186,13 @@
         clicked = true;
         document.getElementById('mydiv').innerHTML = "";
         var dates = [];
+
         
-        Object.values(localStorage).forEach(function(item,index){
-            dates.push(JSON.parse(localStorage.getItem(Object.keys(localStorage).sort()[index])));
-            console.log(JSON.parse(localStorage.getItem(Object.keys(localStorage).sort()[index])))
-        })
+        var data = localStorage.getItem('height').split("},{");
+        for (let i = 0; i <= data.length; i++) {
+            dates.push(JSON.parse(data[0]+"}"))
+        }
+
 
         let table = document.querySelector("table");
         if (clicked === true){
