@@ -1,9 +1,12 @@
 const date = new Date();
-var currentDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+var todayDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+
+
+const div = document.getElementById("mydiv");
+const table = document.getElementById("table");
 
 function mylog(a) {
-    var div = document.getElementById("mydiv");
-    div.innerHTML += "<h1><br>" + a + "</br></h1>";
+    div.innerHTML +=  a.split("\n").map(i => '<h1><br>'+i+'<br></h1>').join("");
 }
 
 function round2(num) {
@@ -33,88 +36,63 @@ function generateTable(table, data) {
     }
 }
 
-var the_BMI, the_height, the_heights, the_weight;
 
 function getHeight() {
-    the_height = prompt("Enter the height in feet: ");
+    const the_height = prompt("Enter the height in feet: ");
     const parse = (/^(?:[0-9]{1,}'[0-1]{1,2})|(?:^[0-9]{1,}$)$/g).exec(the_height);
     if (parse !== null) {
-        myFunction(Number.parseFloat(parse[0]));
+        calculate(Number.parseFloat(parse[0]));
     } else {
         mylog("Please enter a valid height.");
     }
 }
-function myFunction(the_height) {
-    the_weight = Number.parseFloat(prompt("Enter the weight in kg: "));
-    if (isNaN(the_weight)) {
+function calculate(height) {
+    const weight = Number.parseFloat(prompt("Enter the weight in kg: "));
+    if (isNaN(weight)) {
         mylog("Please enter a valid weight.");
         return;
     }
-    the_BMI = the_weight / Math.pow((the_height * 30.48) / 100, 2);
+    const the_BMI = weight / Math.pow((height * 30.48) / 100, 2);
     mylog(`Your Body Mass Index is ${round2(the_BMI)}`);
     if (the_BMI <= 18.5) {
         mylog("You are underweight.");
     } else if (the_BMI <= 24.9) {
         mylog("You are healthy.");
     } else if (the_BMI <= 29.9) {
-        mylog("You are over weight.");
-        mylog(
-            `To be healthy you need to lose ${round2(the_weight - bmi2kg(24.9, the_height))} kg`,
-        );
-        mylog(
-            `To be healthy your weight should be ${bmi2kg(24.9, the_height)} kg`,
-        );
+        mylog(`You are over weight.
+        To be healthy you need to lose ${round2(weight - bmi2kg(24.9, height))} kg
+        To be healthy your weight should be ${bmi2kg(24.9, height)} kg`);
     } else if (the_BMI > 29.9) {
-        mylog("You are obese.");
-        mylog("To be healthy your BMI should be between 18.5 and 24.9");
-        mylog(
-            `To be healthy you need to lose ${round2(the_weight - bmi2kg(24.9, the_height))} kg`,
-        );
-        mylog(
-            `To be healthy your weight should be ${bmi2kg(24.9, the_height)} kg`,
-        );
+        mylog(`You are obese.
+        To be healthy your BMI should be between 18.5 and 24.9
+        To be healthy you need to lose ${round2(weight - bmi2kg(24.9, height))} kg
+        To be healthy your weight should be ${bmi2kg(24.9, height)} kg`);
     }
     if (localStorage.getItem("height") != null) {
-        localStorage.setItem(
-            "height",
-            localStorage.getItem("height") +
-                "@" +
-                `{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}}`,
-        );
-    } else
-        localStorage.setItem(
-            "height",
-            `{ "Date":"${currentDate}","Weight":${the_weight},"Height":${the_height}}`,
-        );
+        localStorage.setItem("height",localStorage.getItem("height")+"@"+`{ "Date":"${todayDate}","Weight":${weight},"Height":${height}}`)
+    } else {
+        localStorage.setItem("height",`{ "Date":"${todayDate}","Weight":${weight},"Height":${height}}`);
+    }
 }
 
 document.getElementById("calc").addEventListener("click", function () {
-    document.getElementById("mydiv").innerHTML = "";
+    div.innerHTML = "";
     getHeight();
 });
 document.getElementById("recalc").addEventListener("click", function () {
-    document.getElementById("mydiv").innerHTML = "";
-    myFunction(Number.parseFloat(localStorage.getItem("savedHeight")));
+    div.innerHTML = "";
+    calculate(Number.parseFloat(localStorage.getItem("savedHeight")));
 });
 document.getElementById("chistory").addEventListener("click", function () {
-    document.querySelector("table").innerHTML = "";
-    document.getElementById("mydiv").innerHTML = "";
+    table.innerHTML = "";
+    div.innerHTML = "";
 });
-var clicked;
+
 document.getElementById("history").addEventListener("click", function () {
-    clicked = true;
-    document.getElementById("mydiv").innerHTML = "";
-
-    var dates = localStorage.getItem("height").split("@");
-
-    dates.forEach((element, index) => {
-        dates[index] = JSON.parse(element);
-    });
-
-    let table = document.querySelector("table");
-    if (clicked === true) {
-        table.innerHTML = "";
-        generateTable(table, dates);
-        generateTableHead(table, Object.keys(dates[0]));
-    }
+    table.innerHTML = "";
+    div.innerHTML = "";
+    const dates = localStorage.getItem("height").split("@").map(i => JSON.parse(i));
+    generateTable(table, dates);
+    generateTableHead(table, Object.keys(dates[0]));
+    
 });
