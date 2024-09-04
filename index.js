@@ -79,6 +79,16 @@ document.getElementById("calc").addEventListener("click", function () {
     div.innerHTML = "";
     getHeight();
 });
+document.getElementById("savheight").addEventListener("click", function () {
+    div.innerHTML = "";
+    const a = (/^(?:[0-9]{1,}'[0-1]{1,2})|(?:^[0-9]{1,}$)$/g).exec(prompt("Enter the height to save in feet: "));
+    if (a !== null) {
+        localStorage.setItem('height',Number.parseFloat(a[0]));
+    } else {
+        mylog("Please enter a valid height.");
+    }
+    
+});
 document.getElementById("recalc").addEventListener("click", function () {
     div.innerHTML = "";
     calculate(Number.parseFloat(localStorage.getItem("savedHeight")));
