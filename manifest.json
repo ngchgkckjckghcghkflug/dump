@@ -1,7 +1,7 @@
 {
   "name": "BMI Calculator",
   "short_name": "BMI Calculator",
-  "start_url": "main.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#fff",
   "description": "A app to calculate BMI.",
