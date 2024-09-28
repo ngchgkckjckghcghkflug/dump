@@ -41,7 +41,7 @@ function getHeight() {
     const the_height = prompt("Enter the height in feet: ");
     const parse = (/^(?:[0-9]{1,}'[0-1]{1,2})|(?:^[0-9]{1,}$)$/g).exec(the_height);
     if (parse !== null) {
-        if ("'" in parse[0] && parse[0].split("'").length == 2){
+        if (parse[0].includes("'") && parse[0].split("'").length == 2){
             calculate(Number.parseFloat(parse[0].split("'")[0])+(Number.parseFloat(parse[0].split("'")[1])/12))
         } else {
             calculate(Number.parseFloat(parse[0]));
@@ -87,7 +87,7 @@ document.getElementById("savheight").addEventListener("click", function () {
     div.innerHTML = "";
     const a = (/^(?:[0-9]{1,}'[0-1]{1,2})|(?:^[0-9]{1,}$)$/g).exec(prompt("Enter the height to save in feet: "));
     if (a !== null) {
-        if ("'" in a[0] && a[0].split("'").length == 2){
+        if (a[0].includes("'") && a[0].split("'").length == 2){
            localStorage.setItem('height',Number.parseFloat(a[0].split("'")[0])+(Number.parseFloat(a[0].split("'")[1])/12))
         } else {
             localStorage.setItem('height',Number.parseFloat(a[0]));
