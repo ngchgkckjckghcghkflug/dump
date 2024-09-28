@@ -100,7 +100,7 @@ document.getElementById("savheight").addEventListener("click", function () {
 });
 document.getElementById("recalc").addEventListener("click", function () {
     div.innerHTML = "";
-    calculate(Number.parseFloat(localStorage.getItem("savedHeight")));
+    calculate(Number.parseFloat(localStorage.getItem("savHeight")));
 });
 document.getElementById("chistory").addEventListener("click", function () {
     table.innerHTML = "";
