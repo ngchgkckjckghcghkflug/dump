@@ -43,7 +43,7 @@ function getHeight() {
     if (parse !== null) {
         if ("'" in parse[0] && parse[0].split("'").length == 2){
             calculate(Number.parseFloat(parse[0].split("'")[0])+(Number.parseFloat(parse[0].split("'")[1])/12))
-        } else
+        } else {
             calculate(Number.parseFloat(parse[0]));
         }
     } else {
