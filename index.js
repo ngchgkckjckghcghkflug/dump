@@ -88,9 +88,9 @@ document.getElementById("savheight").addEventListener("click", function () {
     const a = (/^(?:[0-9]{1,}'[0-1]{1,2})|(?:^[0-9]{1,}$)$/g).exec(prompt("Enter the height to save in feet: "));
     if (a !== null) {
         if (a[0].includes("'") && a[0].split("'").length == 2){
-           localStorage.setItem('savheight',Number.parseFloat(a[0].split("'")[0])+(Number.parseFloat(a[0].split("'")[1])/12))
+           localStorage.setItem('sheight',Number.parseFloat(a[0].split("'")[0])+(Number.parseFloat(a[0].split("'")[1])/12))
         } else {
-            localStorage.setItem('savheight',Number.parseFloat(a[0]));
+            localStorage.setItem('sheight',Number.parseFloat(a[0]));
         }
     } else {
         mylog("Please enter a valid height.")
@@ -100,7 +100,11 @@ document.getElementById("savheight").addEventListener("click", function () {
 });
 document.getElementById("recalc").addEventListener("click", function () {
     div.innerHTML = "";
-    calculate(Number.parseFloat(localStorage.getItem("savHeight")));
+    if (localStorage.getItem("sheight") !== null){
+        calculate(Number.parseFloat(localStorage.getItem("sheight")));
+    }else {
+        mylog("Please set a height.")
+    }
 });
 document.getElementById("chistory").addEventListener("click", function () {
     table.innerHTML = "";
